@@ -1,23 +1,23 @@
 import logo from './logo.svg';
 import './App.css';
+import React,{useState, useEffect} from 'react';
+import Navbar from './components/Navbar';
+import Bodywork from './components/Bodywork';
+import Sidebar from './components/Sidebar';
 
 function App() {
+  const [isMobile, setIsMobile]= useState(window.innerWidth <= 770);
+
+  useEffect(() => { const handleResize = () => { setIsMobile(window.innerWidth < 770); }; 
+  window.addEventListener('resize', handleResize); 
+  return () => window.removeEventListener('resize', handleResize); }, []);
+
+  //crea un archivo header.js, ahí importas el navbar y procedes a inyectar ese archivo dentro del header de html
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {isMobile ? <Sidebar /> : <Navbar /> }
+      
+      <Bodywork />
     </div>
   );
 }
